@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Traceability Lookup</title>
+  <script src="https://cdn.jsdelivr.net/npm/ethers@6.7.0/dist/ethers.umd.min.js"></script>
+  <style>
+    body { font-family: sans-serif; max-width: 900px; margin: 2em auto; }
+    input, button { padding: 8px; margin: 5px 0; width: 100%; }
+    table { width: 100%; border-collapse: collapse; margin-top: 20px; }
+    th, td { border: 1px solid #ccc; padding: 6px; font-size: 14px; }
+    th { background: #eee; }
+    .hash { word-break: break-all; font-size: 12px; color: #555; }
+    .status { margin-bottom: 1em; color: green; font-weight: bold; }
+  </style>
+</head>
+<body>
+  <h2>🧾 Batch Traceability Lookup</h2>
+
+  <button onclick="connectWallet()">🦊 Connect Wallet</button>
+  <div id="walletStatus" class="status"></div>
+
+  <p>Enter Batch ID:</p>
+  <input id="batchInput" placeholder="e.g., BEEF001" />
+  <button onclick="query()">🔍 Query Trace Info</button>
+
+  <div id="currentInfo"></div>
+  <div id="historyTable"></div>
+
+  <script>
+    let contract, signer;
+
+    const abi = [
+      "function getTraceHistory(string) view returns (uint256[],int256[],int256[],string[],string[],bytes32[])",
+      "function getTraceInfo(string) view returns (string,int256,uint256)"
+    ];
+    const contractAddress = "0xe35cEb7b71A19440100058903ba4Cf4b6fca6618"; // ✅ 替换为你的合约地址
+
+    async function connectWallet() {
+      try {
+        if (!window.ethereum) {
+          alert("MetaMask not found. Please install it.");
+          return;
+        }
+        const provider = new ethers.BrowserProvider(window.ethereum);
+        signer = await provider.getSigner();
+        contract = new ethers.Contract(contractAddress, abi, signer);
+        const addr = await signer.getAddress();
+        document.getElementById("walletStatus").innerText = "✅ Connected: " + addr;
+      } catch (err) {
+        console.error(err);
+        alert("Wallet connection failed.");
+      }
+    }
+
+    async function query() {
+      if (!contract) return alert("Please connect wallet first.");
+      const batchId = document.getElementById("batchInput").value.trim();
+      if (!batchId) return alert("Please enter a batch ID.");
+
+      try {
+        const [loc, temp, ts] = await contract.getTraceInfo(batchId);
+        const [tss, temps, hums, locs, names, hashes] = await contract.getTraceHistory(batchId);
+
+        document.getElementById("currentInfo").innerHTML = `
+          <h3>📍 Current Status</h3>
+          <p><b>Location:</b> ${loc}</p>
+          <p><b>Temperature:</b> ${(Number(temp) / 100).toFixed(2)} °C</p>
+          <p><b>Last Updated:</b> ${new Date(Number(ts) * 1000).toLocaleString()}</p>
+        `;
+
+        let rows = "";
+        for (let i = 0; i < tss.length; i++) {
+          rows += `<tr>
+            <td>${new Date(Number(tss[i]) * 1000).toLocaleString()}</td>
+            <td>${locs[i]}</td>
+            <td>${(Number(temps[i]) / 100).toFixed(2)}</td>
+            <td>${(Number(hums[i]) / 100).toFixed(2)}</td>
+            <td>${names[i]}</td>
+            <td class="hash">${hashes[i]}</td>
+          </tr>`;
+        }
+
+        document.getElementById("historyTable").innerHTML = `
+          <h3>📜 History Records</h3>
+          <table>
+            <thead><tr><th>Time</th><th>Location</th><th>Temp</th><th>Hum</th><th>Name</th><th>Hash</th></tr></thead>
+            <tbody>${rows}</tbody>
+          </table>
+        `;
+      } catch (err) {
+        console.error(err);
+        alert("Failed to fetch. Check MetaMask and console.");
+      }
+    }
+  </script>
+</body>
+</html>

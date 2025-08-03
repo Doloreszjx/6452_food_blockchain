@@ -1,0 +1,38 @@
+[
+  {
+    "batch_id": "batch321",
+    "ts": "2025-07-31T02:09:29Z",
+    "temp": 0.7,
+    "hum": 74.5,
+    "location": "Beijing",
+    "productName": "Beef",
+    "hash": "2d252fc5ebb05a7256a371148fc8a4fa1bb7531613a8cce069c015ca5d54a016"
+  },
+  {
+    "batch_id": "batch321",
+    "ts": "2025-07-31T02:19:59Z",
+    "temp": 3.0,
+    "hum": 86.1,
+    "location": "Hebei",
+    "productName": "Beef",
+    "hash": "2cf33f9a6efd5c41d37eebeda8ccd568286d25c456fcf0c06f2ab0b583c3292e"
+  },
+  {
+    "batch_id": "batch321",
+    "ts": "2025-07-31T02:30:29Z",
+    "temp": 0.7,
+    "hum": 89.1,
+    "location": "Shanghai",
+    "productName": "Beef",
+    "hash": "8c3b1146041b26c682e7c4427d7b8046fc7673439cc73c6c05150ad1f4ac808d"
+  },
+  {
+    "batch_id": "batch321",
+    "ts": "2025-07-31T02:40:59Z",
+    "temp": 0.7,
+    "hum": 71.8,
+    "location": "Guangzhou",
+    "productName": "Beef",
+    "hash": "00059ca954758117a6381dcfdfa1361d22a666d641cce80b7e34fe1adfe5c9b0"
+  }
+]
