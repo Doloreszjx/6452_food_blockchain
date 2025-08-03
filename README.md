@@ -121,6 +121,7 @@ This project is a food traceability system based on blockchain technology, aimin
 - IPFS
 - Mosquitto MQTT Broker
 
+---
 ## Instructions
 ### Python backend modules and scripts (traceability_backend/)
 #### Mosquitto certificate download
@@ -226,12 +227,12 @@ npx hardhat test
 
 ## Contribution
 
-HD_plz
-Jiaxiao Han z5568557
-Jiaxin Zhang z5491108
-Mingxuan Zhang z5542095
-Yichen Bai z5339365
-Yinan Cai z5547906
+HD_plz </br>
+Jiaxiao Han z5568557 </br>
+Jiaxin Zhang z5491108 </br>
+Mingxuan Zhang z5542095 </br>
+Yichen Bai z5339365 </br>
+Yinan Cai z5547906 </br>
 
 
 
