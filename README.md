@@ -17,7 +17,7 @@ This project is a food traceability system based on blockchain technology, aimin
 │   ├── abi.json               # Smart contract ABI file
 │   ├── .env                   # Environment variable configuration file
 
-├── supply-chain-project/      # # Payment3 smart contract test code
+├── supply-chain-project/      # Payment3 smart contract test code
 ├── Payment3.sol               # Supply chain payment contract file
 ├── Traceability.sol           # Traceability function contract file
 ├── Traceability_test.sol      # Traceability function test file
